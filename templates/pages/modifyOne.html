@@ -1,0 +1,47 @@
+{% extends 'layout/app.html'%}
+
+{% include 'partials/_nav_return.html'%}
+
+{% block body %}
+
+<header>
+    <h1 class="text-center m-3">Ajouter</h1>
+</header>
+
+<div class="table-container">
+
+    <section>
+
+        <form method="POST" action="/post-modify/{{crypto_selected[0]}}">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2"><i
+                            class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="crypto" value="{{crypto_selected[1]}}" placeholder="Sélectionner une crypto" class="form-control" id="crypto"
+                        aria-describedby="inputGroupPrepend2" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2"><i class="fa-solid fa-coins"></i></span>
+                    <input type="text" name="quantite" value="{{crypto_selected[2]}}" placeholder="Quantité" class="form-control" id="quantite"
+                        aria-describedby="inputGroupPrepend2" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2"><i class="fa-solid fa-euro-sign"></i></span>
+                    <input type="text" name="prix" value="{{crypto_selected[3]}}" placeholder="Prix d'achat" class="form-control" id="prix"
+                        aria-describedby="inputGroupPrepend2" required>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn">Modifier</button>
+
+        </form>
+    </section>
+
+</div>
+
+{% endblock%}

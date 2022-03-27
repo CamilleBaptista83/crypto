@@ -1,0 +1,43 @@
+{% extends 'layout/app.html'%}
+
+{% include 'partials/_nav.html'%}
+
+{% block body %}
+
+<header>
+    <h1 class="text-center m-3">+5000</h1>
+</header>
+
+<div class="table-container">
+
+
+    <section>
+        <table class="table">
+            <tbody>
+                
+                {% for crypto in mes_cryptos %}
+                <tr>
+                    <th>{{crypto[1]}}</th>
+                    <td class="chevrons"><i class="fa-solid fa-angle-up"></i></td>
+                </tr>
+                {% endfor %}
+
+                <!-- <tr>
+                    <th>2</th>
+                    <td>Jacob</td>
+                    <td><i class="fa-solid fa-angle-down"></i></td>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td>Larry the Bird</td>
+                    <td><i class="fa-solid fa-equals"></i></td>
+                </tr> -->
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+
+
+{% endblock%}

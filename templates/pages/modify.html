@@ -1,0 +1,32 @@
+{% extends 'layout/app.html'%}
+
+{% include 'partials/_nav_return.html'%}
+
+{% block body %}
+
+<header>
+    <h1 class="text-center m-3">Modifier</h1>
+</header>
+
+<div class="table-container">
+
+
+    <section>
+        <table class="table">
+            <tbody>
+                
+                {% for crypto in mes_cryptos %}
+                <tr>
+                    <th>{{crypto[1]}}</th>
+                    <td class="chevrons"> <a href="/modify/{{crypto[0]}}"><i class="fa-solid fa-pen"></i></a> </td>
+                    <td class="chevrons"> <a href="/delete/{{crypto[0]}}"><i class="fa-solid fa-xmark"></i></a> </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+{% endblock%}

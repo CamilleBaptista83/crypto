@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,400;1,900&display=swap');
+
+:root {
+    --main-font: 'Roboto', sans-serif;
+    --font-logo: 'Roboto', sans-serif;
+    --black : #100f0f;
+    --gris-clair : #efefef;
+    --vert : #1fc36c;
+  }
+
+  body {
+      background-color: var(--black);
+      color: var(--gris-clair);
+  }
+
+  tr > *, a, i {
+      color: var(--gris-clair);
+  }
+
+  .chevrons{
+      text-align: right;
+  }
+
+  header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 10rem;
+      background-color: var(--vert);
+  }
+
+  .input-group{
+      margin: 2rem 0;
+  }
+
+  .form-control, .input-group-text {
+      background-color: var(--black);
+      color: var(--gris-clair);
+  }
+
+  .btn{
+      color: var(--gris-clair);
+      border: var(--gris-clair) 1px solid;
+      margin: 2rem 0;
+  }
+
+  form{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+  }
+
+
+@media screen and (max-width: 500px) {
+
+    .navbar-nav{
+        flex-direction: row;
+    }
+    .navbar-nav .nav-link{
+        padding: 0 1rem;
+    }
+
+    .table-container {
+        padding: 2rem;
+    }
+}

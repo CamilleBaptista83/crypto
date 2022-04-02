@@ -1,25 +1,43 @@
 from flask import Flask, render_template, redirect, request
 import mysql.connector
+import requests
+
+import pandas as pd
 
 def create_app():
     app = Flask(__name__)
 
     @app.route("/")
     def home():
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
         baseDeDonnees.close()
-        return render_template('pages/home.html', mes_cryptos = mes_cryptos)
+        #API POUR LES COMPARAISONS
+        headers = { 'X-CMC_PRO_API_KEY' : 'da42f614-1cf8-4c99-86ff-d8aaa4a24602'}
+        api_cryptos = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
+        api_cryptos = api_cryptos.json()['data']
+        #CALCULS DU PRIX TOTAL 
+        df_mes_cryptos = pd.DataFrame(mes_cryptos)
+        total_prix = df_mes_cryptos[3].sum()
+
+        return render_template('pages/home.html', mes_cryptos = mes_cryptos, total_prix = total_prix, api_cryptos=api_cryptos)
 
     @app.route("/add")
     def add():
-        return render_template('pages/add.html')
+        #API POUR LES OPTIONS
+        headers = { 'X-CMC_PRO_API_KEY' : 'da42f614-1cf8-4c99-86ff-d8aaa4a24602'}
+        api_crypto = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
+        api_crypto = api_crypto.json()['data']
+        api_crypto
+        return render_template('pages/add.html', api_crypto = api_crypto)
 
     @app.route("/post-add", methods=['POST'] )
     def postAdd():
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         new_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'])
         curseur.execute("INSERT INTO mes_cryptos (crypto, quantite, prix) VALUES (%s, %s, %s)", new_crypto)
@@ -29,7 +47,7 @@ def create_app():
 
     @app.route("/modify")
     def modify():
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
@@ -38,7 +56,7 @@ def create_app():
         
     @app.route("/modify/<id>")
     def modifyOne(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos WHERE id = (%s)", (id, ))
         crypto_selected = curseur.fetchone()
@@ -47,7 +65,7 @@ def create_app():
 
     @app.route("/post-modify/<id>", methods=['POST'] )
     def postModify(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         update_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'], id)
         curseur.execute("UPDATE mes_cryptos SET crypto=%s, quantite=%s, prix=%s WHERE id=%s", update_crypto)
@@ -57,7 +75,7 @@ def create_app():
         
     @app.route("/delete/<int:id>")
     def delete(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
         curseur = baseDeDonnees.cursor()
         curseur.execute(" DELETE FROM mes_cryptos WHERE id = (%s)", (id, ))
         baseDeDonnees.commit()

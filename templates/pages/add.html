@@ -17,8 +17,13 @@
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="crypto" placeholder="Sélectionner une crypto" class="form-control" id="crypto"
-                        aria-describedby="inputGroupPrepend2" required>
+                    <select class="form-select" aria-label="Default select example" name="crypto" size="">
+                        <option selected>Sélectionner une crypto</option>
+
+                        {% for crypto in api_crypto %}
+                        <option value="{{crypto['symbol']}}">{{crypto['symbol']}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-md-4">

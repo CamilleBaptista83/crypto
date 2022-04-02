@@ -5,7 +5,7 @@
 {% block body %}
 
 <header>
-    <h1 class="text-center m-3">+5000</h1>
+    <h1 class="text-center m-3">{{total_prix}}</h1>
 </header>
 
 <div class="table-container">
@@ -14,11 +14,25 @@
     <section>
         <table class="table">
             <tbody>
-                
+
                 {% for crypto in mes_cryptos %}
                 <tr>
                     <th>{{crypto[1]}}</th>
+                    <th>{{crypto[2]}}</th>
+                    <th>{{crypto[3]}}</th>
+                    {% for api_crypto in api_cryptos %}
+                    {% if crypto[1] == api_crypto['symbol'] %}
+                    {% if  api_crypto['quote']['USD']['price'] * crypto[2] > crypto[3]%}
+
                     <td class="chevrons"><i class="fa-solid fa-angle-up"></i></td>
+
+                    {% else %}
+
+                    <td class="chevrons"><i class="fa-solid fa-angle-down"></i></td>
+
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
                 </tr>
                 {% endfor %}
 

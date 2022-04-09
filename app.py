@@ -4,13 +4,17 @@ import requests
 
 import pandas as pd
 
+# baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+
+
+
 def create_app():
     app = Flask(__name__)
 
     @app.route("/")
     def home():
         #BDD APPEL
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
@@ -37,7 +41,7 @@ def create_app():
     @app.route("/post-add", methods=['POST'] )
     def postAdd():
         #BDD APPEL
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         new_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'])
         curseur.execute("INSERT INTO mes_cryptos (crypto, quantite, prix) VALUES (%s, %s, %s)", new_crypto)
@@ -47,7 +51,7 @@ def create_app():
 
     @app.route("/modify")
     def modify():
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
@@ -56,7 +60,7 @@ def create_app():
         
     @app.route("/modify/<id>")
     def modifyOne(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos WHERE id = (%s)", (id, ))
         crypto_selected = curseur.fetchone()
@@ -65,7 +69,7 @@ def create_app():
 
     @app.route("/post-modify/<id>", methods=['POST'] )
     def postModify(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         update_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'], id)
         curseur.execute("UPDATE mes_cryptos SET crypto=%s, quantite=%s, prix=%s WHERE id=%s", update_crypto)
@@ -75,7 +79,7 @@ def create_app():
         
     @app.route("/delete/<int:id>")
     def delete(id):
-        baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
         curseur.execute(" DELETE FROM mes_cryptos WHERE id = (%s)", (id, ))
         baseDeDonnees.commit()

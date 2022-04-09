@@ -17,11 +17,11 @@
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
-                    <select class="form-select" aria-label="Default select example" name="crypto" size="">
+                    <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto">
                         <option selected>Sélectionner une crypto</option>
 
                         {% for crypto in api_crypto %}
-                        <option value="{{crypto['symbol']}}">{{crypto['symbol']}}</option>
+                        <option value="{{crypto['symbol']}}" >{{crypto['symbol']}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -33,13 +33,20 @@
                         aria-describedby="inputGroupPrepend2" required>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i class="fa-solid fa-euro-sign"></i></span>
-                    <input type="text" name="prix" placeholder="Prix d'achat" class="form-control" id="prix"
+                    <input type="text" name="prix" placeholder="Prix d'achat" class="form-control" id="prix-add"
                         aria-describedby="inputGroupPrepend2" required>
                 </div>
             </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="checkboxNowPrice" onclick="isChecked()">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Prix courrant
+                </label>
+              </div>
 
 
             <button type="submit" class="btn">Ajouter</button>

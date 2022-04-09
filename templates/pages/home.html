@@ -6,6 +6,7 @@
 
 <header>
     <h1 class="text-center m-3">{{total_prix}}</h1>
+
 </header>
 
 <div class="table-container">
@@ -19,16 +20,15 @@
                 <tr>
                     <th>{{crypto[1]}}</th>
                     <th>{{crypto[2]}}</th>
-                    <th>{{crypto[3]}}</th>
                     {% for api_crypto in api_cryptos %}
                     {% if crypto[1] == api_crypto['symbol'] %}
-                    {% if  api_crypto['quote']['USD']['price'] * crypto[2] > crypto[3]%}
+                    {% if api_crypto['quote']['USD']['price'] > api_crypto['quote']['USD']['price'] + (api_crypto['quote']['USD']['price'] * (api_crypto['quote']['USD']['percent_change_24h'] / 100)|abs ) %}
 
-                    <td class="chevrons"><i class="fa-solid fa-angle-up"></i></td>
+                    <td class="chevrons"><img src="https://img.icons8.com/officel/16/000000/up-right-arrow.png"/></td>
 
                     {% else %}
 
-                    <td class="chevrons"><i class="fa-solid fa-angle-down"></i></td>
+                    <td class="chevrons"><img src="https://img.icons8.com/officel/16/000000/down-right-arrow.png"/></td>
 
                     {% endif %}
                     {% endif %}

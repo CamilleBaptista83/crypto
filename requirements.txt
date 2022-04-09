@@ -8,4 +8,5 @@ requests
 seaborn
 matplotlib
 pandas
-mysql.connector
+mysql-connector-python
+APScheduler==3.0.0

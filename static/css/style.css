@@ -37,6 +37,9 @@
       background-color: var(--black);
       color: var(--gris-clair);
   }
+  .form-control:disabled {
+      background-color: var(--vert);
+  }
 
   .btn{
       color: var(--gris-clair);

@@ -24,10 +24,13 @@ def create_app():
         api_cryptos = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
         api_cryptos = api_cryptos.json()['data']
         #CALCULS DU PRIX TOTAL 
-        df_mes_cryptos = pd.DataFrame(mes_cryptos)
-        total_prix = df_mes_cryptos[3].sum()
+        total_prix = 0
+        for crypto in mes_cryptos:
+            for api_crypto in api_cryptos:
+                if crypto[1] == api_crypto['symbol']:
+                    total_prix = total_prix +(api_crypto['quote']['USD']['price'] * crypto[2])
 
-        return render_template('pages/home.html', mes_cryptos = mes_cryptos, total_prix = total_prix, api_cryptos=api_cryptos)
+        return render_template('pages/home.html', mes_cryptos = mes_cryptos, total_prix = round(total_prix, 2), api_cryptos=api_cryptos)
 
     @app.route("/add")
     def add():

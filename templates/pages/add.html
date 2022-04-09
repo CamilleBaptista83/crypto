@@ -17,7 +17,7 @@
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
-                    <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto">
+                    <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto" onchange="onChangeCrypto()">
                         <option selected>Sélectionner une crypto</option>
 
                         {% for crypto in api_crypto %}

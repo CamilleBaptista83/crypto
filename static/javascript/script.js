@@ -8,7 +8,7 @@ function isChecked() {
 
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true) {
-        fetch('http://127.0.0.1:5000/get-data-for-js')
+        fetch('https://crypto-app-eval.herokuapp.com/get-data-for-js')
             .then((resp) => resp.json())
             .then(function (data) {
                 data.data.map(crypto => {

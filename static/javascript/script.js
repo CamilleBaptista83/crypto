@@ -13,19 +13,20 @@ function isChecked() {
 
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true) {
-        fetch(url_prod)
+        fetch(url_dev)
             .then((resp) => resp.json())
             .then(function (data) {
                 data.data.map(crypto => {
                     if (crypto.symbol == cryptoValue){
                         console.log('crypto', crypto.quote.USD.price)
-                        text.setAttribute('value', crypto.quote.USD.price);
-                    }else {
-                        text.setAttribute('value', '');
-                        text.disabled = false
-                        document.getElementById("alerteNoCrypto").style.display = "block";
-                        document.getElementById("checkboxNowPrice").checked = false;
+                        text.setAttribute('value', crypto.quote.USD.price.toFixed(2));
                     }
+                    // else {
+                    //     text.setAttribute('value', '');
+                    //     text.disabled = false
+                    //     document.getElementById("alerteNoCrypto").style.display = "block";
+                    //     document.getElementById("checkboxNowPrice").checked = false;
+                    // }
                 })
             })
             .catch(function (error) {
@@ -33,7 +34,7 @@ function isChecked() {
             });
 
         
-        text.disabled = true
+        // text.disabled = true
     } else {
         text.setAttribute('value', '');
         text.disabled = false

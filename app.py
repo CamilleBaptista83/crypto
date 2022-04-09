@@ -16,9 +16,11 @@ def create_app():
         #BDD APPEL
         baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
-        curseur.execute("SELECT * FROM mes_cryptos")
+        # curseur.execute("SELECT * FROM mes_cryptos")
+        curseur.execute("SELECT crypto, SUM(quantite) FROM mes_cryptos GROUP BY crypto")
         mes_cryptos = curseur.fetchall()
         baseDeDonnees.close()
+        print(mes_cryptos)
         #API POUR LES COMPARAISONS
         headers = { 'X-CMC_PRO_API_KEY' : 'da42f614-1cf8-4c99-86ff-d8aaa4a24602'}
         api_cryptos = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
@@ -27,8 +29,8 @@ def create_app():
         total_prix = 0
         for crypto in mes_cryptos:
             for api_crypto in api_cryptos:
-                if crypto[1] == api_crypto['symbol']:
-                    total_prix = total_prix +(api_crypto['quote']['USD']['price'] * crypto[2])
+                if crypto[0] == api_crypto['symbol']:
+                    total_prix = total_prix +(api_crypto['quote']['USD']['price'] * crypto[1])
 
         return render_template('pages/home.html', mes_cryptos = mes_cryptos, total_prix = round(total_prix, 2), api_cryptos=api_cryptos)
 
@@ -66,8 +68,10 @@ def create_app():
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
+        curseur.execute("SELECT crypto, count(*) AS 'nombre_de_crypto' FROM mes_cryptos GROUP BY crypto")
+        nom_cryptos = curseur.fetchall()
         baseDeDonnees.close()
-        return render_template('pages/modify.html', mes_cryptos = mes_cryptos)
+        return render_template('pages/modify.html', mes_cryptos = mes_cryptos, nom_cryptos=nom_cryptos)
         
     @app.route("/modify/<id>")
     def modifyOne(id):

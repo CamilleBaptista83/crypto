@@ -3,64 +3,91 @@
 :root {
     --main-font: 'Roboto', sans-serif;
     --font-logo: 'Roboto', sans-serif;
-    --black : #100f0f;
-    --gris-clair : #efefef;
-    --vert : #1fc36c;
-  }
+    --black: #100f0f;
+    --gris-clair: #efefef;
+    --vert: #1fc36c;
+}
 
-  body {
-      background-color: var(--black);
-      color: var(--gris-clair);
-  }
+body {
+    background-color: var(--black);
+    color: var(--gris-clair);
+}
 
-  tr > *, a, i {
-      color: var(--gris-clair);
-  }
+tr>*,
+a,
+i {
+    color: var(--gris-clair);
+}
 
-  .chevrons{
-      text-align: right;
-  }
+.chevrons {
+    text-align: right;
+}
 
-  header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 10rem;
-      background-color: var(--vert);
-  }
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10rem;
+    background-color: var(--vert);
+}
 
-  .input-group{
-      margin: 2rem 0;
-  }
+.input-group {
+    margin: 2rem 0;
+}
 
-  .form-control, .input-group-text , .form-select{
-      background-color: var(--black);
-      color: var(--gris-clair);
-  }
-  .form-control:disabled {
-      background-color: var(--vert);
-  }
+.form-control,
+.input-group-text,
+.form-select {
+    background-color: var(--black);
+    color: var(--gris-clair);
+}
 
-  .btn{
-      color: var(--gris-clair);
-      border: var(--gris-clair) 1px solid;
-      margin: 2rem 0;
-  }
+.form-control:disabled {
+    background-color: var(--vert);
+}
 
-  form{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-  }
+.btn {
+    color: var(--gris-clair);
+    border: var(--gris-clair) 1px solid;
+    margin: 2rem 0;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.accordion-item {
+    background-color: transparent;
+}
+
+.accordion-button {
+    background-color: var(--gris-clair);
+    border-bottom: var(--black) 3px solid;
+    margin-top: 1rem;
+}
+
+.accordion-button:not(.collapsed),
+.accordion-collapse {
+    background-color: var(--vert);
+    color: #100f0f;
+}
+
+.accordion-button:focus {
+    border-color: transparent;
+    box-shadow: none;
+}
 
 
 @media screen and (max-width: 500px) {
 
-    .navbar-nav{
+    .navbar-nav {
         flex-direction: row;
     }
-    .navbar-nav .nav-link{
+
+    .navbar-nav .nav-link {
         padding: 0 1rem;
     }
 

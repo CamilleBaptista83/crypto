@@ -12,19 +12,56 @@
 
 
     <section>
-        <table class="table">
-            <tbody>
-                
-                {% for crypto in mes_cryptos %}
-                <tr>
-                    <th>{{crypto[1]}}</th>
-                    <td class="chevrons"> <a href="/modify/{{crypto[0]}}"><i class="fa-solid fa-pen"></i></a> </td>
-                    <td class="chevrons"> <a href="/delete/{{crypto[0]}}"><i class="fa-solid fa-xmark"></i></a> </td>
-                </tr>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+
+                {% for nom_crypto in nom_cryptos %}
+
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#{{nom_crypto[0]}}" aria-expanded="false" aria-controls="{{nom_crypto[0]}}">
+                        <p>{{nom_crypto[0]}} ---- {{nom_crypto[1]}}</p>
+                    </button>
+                </h2>
+
+                <div id="{{nom_crypto[0]}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <tbody>
+        
+        
+                                {% for crypto in mes_cryptos %}
+        
+                                {% if crypto[1] == nom_crypto[0] %}
+                                <tr>
+                                    <th>{{crypto[1]}}</th>
+                                    <th>{{crypto[2]}}</th>
+                                    <th>{{crypto[3]}}</th>
+                                    <td class="chevrons"> <a href="/modify/{{crypto[0]}}"><i class="fa-solid fa-pen"></i></a>
+                                    </td>
+                                    <td class="chevrons"> <a href="/delete/{{crypto[0]}}"><i class="fa-solid fa-xmark"></i></a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+        
+                                {% endfor %}
+        
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
                 {% endfor %}
 
-            </tbody>
-        </table>
+            </div>
+        
+        </div>
+
     </section>
 
 </div>

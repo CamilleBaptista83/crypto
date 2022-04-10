@@ -13,19 +13,20 @@
     <section>
 
         <div class="alert alert-danger text-center" role="alert" style="display: none;" id="alerteNoCrypto">
-            Veuillez sélectionner une crypto 
+            Veuillez sélectionner une crypto
         </div>
 
-        <form method="POST" action="/post-add" id="form-add" >
+        <form method="POST" action="/post-add" id="form-add">
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
-                    <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto" onchange="onChangeCrypto()">
+                    <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto"
+                        onchange="onChangeCrypto()">
                         <option selected>Sélectionner une crypto</option>
 
                         {% for crypto in api_crypto %}
-                        <option value="{{crypto['symbol']}}" >{{crypto['symbol']}}</option>
+                        <option value="{{crypto['symbol']}}">{{crypto['symbol']}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -46,11 +47,11 @@
                 </div>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox"  id="checkboxNowPrice" onclick="isChecked()">
+                <input class="form-check-input" type="checkbox" id="checkboxNowPrice" onclick="isChecked()">
                 <label class="form-check-label" for="flexCheckDefault">
-                  Prix courrant
+                    Prix courrant
                 </label>
-              </div>
+            </div>
 
 
             <button type="submit" class="btn">Ajouter</button>

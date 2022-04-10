@@ -31,13 +31,18 @@ header {
     background-color: var(--vert);
 }
 
+a {
+    text-decoration: none;
+}
+
 .input-group {
     margin: 2rem 0;
 }
 
 .form-control,
 .input-group-text,
-.form-select {
+.form-select,
+.form-control[readonly] {
     background-color: var(--black);
     color: var(--gris-clair);
 }
@@ -59,34 +64,22 @@ form {
     flex-direction: column;
 }
 
-.accordion-item {
-    background-color: transparent;
+.titre-rubrique {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.accordion-button {
-    background-color: var(--gris-clair);
-    border-bottom: var(--black) 3px solid;
-    margin-top: 1rem;
-    padding: 0.5rem;
-}
-
-.accordion-button:not(.collapsed),
-.accordion-collapse {
-    background-color: var(--vert);
-    color: #100f0f;
-}
-
-.accordion-button:focus {
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.image-content{
+.image-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 1rem 0;
+}
+
+.container-crypto{
+    border-bottom: solid 3px var(--vert);
 }
 
 @media screen and (max-width: 500px) {
@@ -103,7 +96,7 @@ form {
         padding: 2rem;
     }
 
-    .graph{
+    .graph {
         width: 80%;
     }
 }

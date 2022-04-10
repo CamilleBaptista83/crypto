@@ -82,14 +82,6 @@ def create_app():
         baseDeDonnees.close()
         return redirect('/')
 
-    @app.route("/get-data-for-js")
-    def getDataForJs():
-        #API
-        headers = { 'X-CMC_PRO_API_KEY' : 'da42f614-1cf8-4c99-86ff-d8aaa4a24602'}
-        api_cryptos = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
-        api_cryptos = api_cryptos.json()
-        return api_cryptos
-
     @app.route("/modify")
     def modify():
         baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
@@ -101,33 +93,48 @@ def create_app():
         baseDeDonnees.close()
         return render_template('pages/modify.html', mes_cryptos = mes_cryptos, nom_cryptos=nom_cryptos)
         
-    @app.route("/modify/<id>")
-    def modifyOne(id):
-        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
-        curseur = baseDeDonnees.cursor()
-        curseur.execute("SELECT * FROM mes_cryptos WHERE id = (%s)", (id, ))
-        crypto_selected = curseur.fetchone()
-        baseDeDonnees.close()
+    @app.route("/modify-one/<string:crypto>")
+    def modifyOne(crypto):
+        crypto_selected = crypto
         return render_template('pages/modifyOne.html', crypto_selected = crypto_selected)
-
-    @app.route("/post-modify/<id>", methods=['POST'] )
-    def postModify(id):
-        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
-        curseur = baseDeDonnees.cursor()
-        update_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'], id)
-        curseur.execute("UPDATE mes_cryptos SET crypto=%s, quantite=%s, prix=%s WHERE id=%s", update_crypto)
-        baseDeDonnees.commit()
-        baseDeDonnees.close()
-        return redirect('/')
         
-    @app.route("/delete/<int:id>")
-    def delete(id):
+    @app.route("/vendre", methods=['POST'] )
+    def vendre():
+        #BDD APPEL
         baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
         curseur = baseDeDonnees.cursor()
-        curseur.execute(" DELETE FROM mes_cryptos WHERE id = (%s)", (id, ))
+        vendre_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'])
+        curseur.execute("INSERT INTO mes_cryptos (crypto, quantite, prix) VALUES (%s, -1 *(%s), %s)", vendre_crypto)
         baseDeDonnees.commit()
         baseDeDonnees.close()
         return redirect('/')
+
+
+    @app.route("/get-data-for-js")
+    def getDataForJs():
+        #API
+        headers = { 'X-CMC_PRO_API_KEY' : 'da42f614-1cf8-4c99-86ff-d8aaa4a24602'}
+        api_cryptos = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?aux=cmc_rank',headers=headers)
+        api_cryptos = api_cryptos.json()
+        return api_cryptos
+
+    @app.route("/get-database-for-js")
+    def getDataBaseForJs():
+        #API
+        cryptoWanted = request.args.get('cryptowanted')
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
+        curseur = baseDeDonnees.cursor()
+        curseur.execute(" SELECT SUM(quantite) FROM mes_cryptos WHERE crypto = (%s)", (cryptoWanted, )) 
+        cryptoSelected = curseur.fetchall()       
+        baseDeDonnees.close()
+        df_cryptoSelected = pd.DataFrame(cryptoSelected).T
+        dictionaryObject = df_cryptoSelected.to_dict()
+        # baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
+        # curseur = baseDeDonnees.cursor()
+        # df_mes_cryptos = pd.io.sql.read_sql('SELECT crypto, SUM(quantite) AS quantite FROM mes_cryptos GROUP BY crypto', baseDeDonnees).T
+        # baseDeDonnees.close()
+        # dictionaryObject = df_mes_cryptos.to_dict()
+        return dictionaryObject
 
     return app
 

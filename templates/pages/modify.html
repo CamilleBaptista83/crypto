@@ -10,10 +10,44 @@
 
 <div class="table-container">
 
+    {% for nom_crypto in nom_cryptos %}
+    <div class="container-crypto">
+
+        <div class="titre-rubrique">
+            <h2>{{nom_crypto[0]}} </h2>
+            <button type="submit" class="btn"><a href="/modify-one/{{nom_crypto[0]}}">Vendre</a> </button>
+        </div>
+
+        <p>Historique</p>
+        <table class="table">
+            <tbody>
+
+                {% for crypto in mes_cryptos %}
+
+                {% if crypto[1] == nom_crypto[0] %}
+                <tr>
+                    <th>{{crypto[1]}}</th>
+                    <th>{{crypto[2]}}</th>
+                    <th>{{crypto[3]}}</th>
+
+                </tr>
+                {% endif %}
+
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+    {% endfor %}
+
 
     <section>
 
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
 
                 {% for nom_crypto in nom_cryptos %}
@@ -22,6 +56,7 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#{{nom_crypto[0]}}" aria-expanded="false" aria-controls="{{nom_crypto[0]}}">
                         <p>{{nom_crypto[0]}} ---- Nombre de {{nom_crypto[0]}} : {{nom_crypto[1]}}</p>
+                        <p> <a href="/delete">VENDRE</a> </p>
                     </button>
                 </h2>
 
@@ -30,25 +65,22 @@
                     <div class="accordion-body">
                         <table class="table">
                             <tbody>
-        
-        
+
+
                                 {% for crypto in mes_cryptos %}
-        
+
                                 {% if crypto[1] == nom_crypto[0] %}
                                 <tr>
                                     <th>{{crypto[1]}}</th>
                                     <th>{{crypto[2]}}</th>
                                     <th>{{crypto[3]}}</th>
-                                    <td class="chevrons"> <a href="/modify/{{crypto[0]}}"><i class="fa-solid fa-pen"></i></a>
-                                    </td>
-                                    <td class="chevrons"> <a href="/delete/{{crypto[0]}}"><i class="fa-solid fa-xmark"></i></a>
-                                    </td>
+
                                 </tr>
                                 {% endif %}
-        
+
                                 {% endfor %}
-        
-        
+
+
                             </tbody>
                         </table>
                     </div>
@@ -59,8 +91,8 @@
                 {% endfor %}
 
             </div>
-        
-        </div>
+
+        </div> -->
 
     </section>
 

@@ -5,39 +5,49 @@
 {% block body %}
 
 <header>
-    <h1 class="text-center m-3">Ajouter</h1>
+    <h1 class="text-center m-3">Vendre</h1>
 </header>
 
 <div class="table-container">
 
     <section>
 
-        <form method="POST" action="/post-modify/{{crypto_selected[0]}}">
+        <div class="alert alert-danger text-center" role="alert" style="display: none;" id="alerteNoCrypto">
+            Bien essayer, mais vous ne pouvez pas vendre plus de crypto que ce que vous possédez !
+        </div>
+
+        <form method="POST" id="vendre" action="/vendre">
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="crypto" value="{{crypto_selected[1]}}" placeholder="Sélectionner une crypto" class="form-control" id="crypto"
+                    <input readonly="readonly" type="text" name="crypto" value="{{crypto_selected}}" placeholder="Sélectionner une crypto" class="form-control" id="crypto"
                         aria-describedby="inputGroupPrepend2" required>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i class="fa-solid fa-coins"></i></span>
-                    <input type="text" name="quantite" value="{{crypto_selected[2]}}" placeholder="Quantité" class="form-control" id="quantite"
+                    <input type="text" name="quantite" placeholder="Quantité à vendre" class="form-control" id="quantite"
                         aria-describedby="inputGroupPrepend2" required>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2"><i class="fa-solid fa-euro-sign"></i></span>
-                    <input type="text" name="prix" value="{{crypto_selected[3]}}" placeholder="Prix d'achat" class="form-control" id="prix"
+                    <input type="text" name="prix" placeholder="Prix de vente" class="form-control" id="prix-add"
                         aria-describedby="inputGroupPrepend2" required>
                 </div>
             </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkboxNowPrice" onclick="isChecked()">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Prix courrant
+                </label>
+            </div>
 
 
-            <button type="submit" class="btn">Modifier</button>
+            <button class="btn" type="submit">Vendre</button>
 
         </form>
     </section>

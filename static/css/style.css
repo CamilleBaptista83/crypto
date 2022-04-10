@@ -67,6 +67,7 @@ form {
     background-color: var(--gris-clair);
     border-bottom: var(--black) 3px solid;
     margin-top: 1rem;
+    padding: 0.5rem;
 }
 
 .accordion-button:not(.collapsed),

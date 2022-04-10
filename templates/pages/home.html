@@ -23,7 +23,7 @@
                     {% for api_crypto in api_cryptos %}               
                     {% if crypto[0] == api_crypto['symbol'] %}
                     <th>{{(api_crypto['quote']['USD']['percent_change_24h'])|round(2)}} %</th>     
-                    {% if api_crypto['quote']['USD']['price'] > api_crypto['quote']['USD']['price'] + (api_crypto['quote']['USD']['price'] * (api_crypto['quote']['USD']['percent_change_24h'] / 100)|abs ) %}
+                    {% if api_crypto['quote']['USD']['percent_change_24h'] > 0 %}
 
                     <td class="chevrons"><img src="https://img.icons8.com/officel/16/000000/up-right-arrow.png"/></td>
 

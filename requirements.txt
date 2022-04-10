@@ -9,4 +9,5 @@ seaborn
 matplotlib
 pandas
 mysql-connector-python
+pytest-flask
 APScheduler==3.0.0

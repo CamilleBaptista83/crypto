@@ -1,8 +1,12 @@
 from flask import Flask, render_template, redirect, request
 import mysql.connector
 import requests
-
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+import io
+import base64
 
 # baseDeDonnees = mysql.connector.connect(host="localhost",user="root",password="admin", database="crypto")
 
@@ -33,6 +37,30 @@ def create_app():
                     total_prix = total_prix +(api_crypto['quote']['USD']['price'] * crypto[1])
 
         return render_template('pages/home.html', mes_cryptos = mes_cryptos, total_prix = round(total_prix, 2), api_cryptos=api_cryptos)
+    
+    @app.route("/graphique")
+    def graphique():
+        baseDeDonnees = mysql.connector.connect(host="i54jns50s3z6gbjt.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",user="o5q7ys45hd9rm28z",password="kb3khvmwsobs9ol6", database="os1rnwtjjd7h2evx")
+        curseur = baseDeDonnees.cursor()
+        df_mes_cryptos = pd.io.sql.read_sql('SELECT * FROM every_day', baseDeDonnees)
+        baseDeDonnees.close()
+
+        img = io.BytesIO()
+        
+        plt.figure(figsize=(16,8), facecolor = 'black')
+        plt.plot(df_mes_cryptos.jour, df_mes_cryptos.montant, c='white', lw=6)
+        plt.axis('off')
+        plt.xlabel('Dates')
+        plt.ylabel('Incomes ($)')
+        plt.title('Élution du CA sur la période 2018 - 2020')
+        plt.xticks(df_mes_cryptos.jour[::1])
+
+        plt.savefig(img, format='png')
+        plt.close()
+        img.seek(0)
+
+        image = base64.b64encode(img.getvalue()).decode('utf8')
+        return render_template('pages/graph.html', image=image)
 
     @app.route("/add")
     def add():

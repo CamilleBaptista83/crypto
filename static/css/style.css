@@ -57,6 +57,16 @@ a {
     margin: 2rem 0;
 }
 
+.fixed {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    max-width: 10rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 form {
     display: flex;
     justify-content: center;
@@ -78,8 +88,16 @@ form {
     margin: 1rem 0;
 }
 
-.container-crypto{
+.container-crypto {
     border-bottom: solid 3px var(--vert);
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: var(--vert);
 }
 
 @media screen and (max-width: 500px) {

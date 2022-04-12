@@ -5,13 +5,14 @@
 {% block body %}
 
 <header>
+
     <h1 class="text-center m-3">{{total_prix}}</h1>
 
 </header>
 
 <div class="table-container">
 
-    <h2>Mes crypto-monnaies</h2>
+    <h2 class="text-center">Mes crypto-monnaies</h2>
 
 
     <section>
@@ -39,18 +40,10 @@
                 </tr>
                 {% endfor %}
 
-                <!-- <tr>
-                    <th>2</th>
-                    <td>Jacob</td>
-                    <td><i class="fa-solid fa-angle-down"></i></td>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <td>Larry the Bird</td>
-                    <td><i class="fa-solid fa-equals"></i></td>
-                </tr> -->
             </tbody>
         </table>
+
+        <button class="btn fixed"><a href="/graphique">Graphique des gains</a></button>
     </section>
 
 </div>

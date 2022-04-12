@@ -5,7 +5,7 @@
 {% block body %}
 
 <header>
-    <h1 class="text-center m-3">Modifier</h1>
+    <h1 class="text-center m-3">Admin</h1>
 </header>
 
 <div class="table-container">
@@ -26,9 +26,9 @@
 
                 {% if crypto[1] == nom_crypto[0] %}
                 <tr>
-                    <th>{{crypto[1]}}</th>
-                    <th>{{crypto[2]}}</th>
-                    <th>{{crypto[3]}}</th>
+                    <th class="form-group {{'red' if crypto[2] < 0 }} {{'green' if crypto[2] > 0 }}">{{crypto[1]}}</th>
+                    <th class="form-group {{'red' if crypto[2] < 0 }} {{'green' if crypto[2] > 0 }}" >{{crypto[2]}}</th>
+                    <th class="form-group {{'red' if crypto[2] < 0 }} {{'green' if crypto[2] > 0 }}">{{crypto[3]}}</th>
 
                 </tr>
                 {% endif %}

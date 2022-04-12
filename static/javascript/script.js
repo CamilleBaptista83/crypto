@@ -23,8 +23,10 @@ function isChecked() {
             .then(function (data) {
                 data.data.map(crypto => {
                     if (crypto.symbol == cryptoValue) {
+                        document.getElementById("alerteNoCrypto").style.display = "none";
                         console.log('crypto', crypto.quote.USD.price)
-                        text.setAttribute('value', crypto.quote.USD.price.toFixed(2) * quantite);
+                        prix_total = crypto.quote.USD.price * quantite.value
+                        text.setAttribute('value', prix_total.toFixed(2));
                     }
                     console.log( 'text.value', text.value)
                     // else {
@@ -83,27 +85,3 @@ formVendre.addEventListener('submit', e => {
             console.log(error);
         });
 });
-
-// function validationVendre() {
-//     var quantite = document.getElementById("quantite");
-//     var crypto = document.getElementById("crypto");
-
-//     let url_prod = 'https://crypto-app-eval.herokuapp.com/get-database-for-js'
-//     let url_dev = 'http://127.0.0.1:5000/get-database-for-js'
-
-//     fetch(url_dev + '?cryptowanted=' + crypto.value)
-//         .then((resp) => resp.json())
-//         .then(function (data) {
-//             if(quantite.value <= data[0][0]){
-//                 console.log('ok')
-//                 return true
-//             }else{
-//                 document.getElementById("alerteNoCrypto").style.display = "block";
-//                 return false
-//             }
-            
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         });
-// }

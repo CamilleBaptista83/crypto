@@ -18,7 +18,7 @@ function isChecked() {
             document.getElementById("alerteNoCrypto").style.display = "block";
             document.getElementById("checkboxNowPrice").checked = false;
         }else {
-            fetch(url_dev)
+            fetch(url_prod)
             .then((resp) => resp.json())
             .then(function (data) {
                 data.data.map(crypto => {
@@ -68,10 +68,7 @@ formVendre.addEventListener('submit', e => {
     var quantite = document.getElementById("quantite");
     var crypto = document.getElementById("crypto");
 
-    let url_prod = 'https://crypto-app-eval.herokuapp.com/get-database-for-js'
-    let url_dev = 'http://127.0.0.1:5000/get-database-for-js'
-
-    fetch(url_dev + '?cryptowanted=' + crypto.value)
+    fetch(url_prod + '?cryptowanted=' + crypto.value)
         .then((resp) => resp.json())
         .then(function (data) {
             if(quantite.value <= data[0][0]){

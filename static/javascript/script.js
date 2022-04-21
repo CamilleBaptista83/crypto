@@ -1,21 +1,42 @@
 // REGARDE SI LES CHECKBOX EST CHECK, SI OUI AFFICHE LE PRIX REEL DE LA CRYPTO SINON AFFICHE UNE ALERTE
+var formAdd = document.getElementById("form-add");
+
+// Get the checkbox
+var checkBox = document.getElementById("checkboxNowPrice");
+// Get the input
+var text = document.getElementById("prix-add");
+var quantite = document.getElementById("quantite");
+
+var cryptoValue = document.getElementById("crypto").value;
+
+if (formAdd) {
+	formAdd.addEventListener("submit", (e) => {
+		e.preventDefault();
+		if (
+			cryptoValue == "Sélectionner une crypto" ||
+			quantite.value === "" ||
+			parseFloat(quantite.value) <= 0
+		) {
+			document.getElementById("alerteNoCrypto").style.display = "block";
+			document.getElementById("checkboxNowPrice").checked = false;
+			return false;
+		}
+		return true;
+	});
+}
 
 function isChecked() {
-	// Get the checkbox
-	var checkBox = document.getElementById("checkboxNowPrice");
-	// Get the input
-	var text = document.getElementById("prix-add");
-	var quantite = document.getElementById("quantite");
-
-	var cryptoValue = document.getElementById("crypto").value;
-
 	// If the checkbox is checked, display the output text
 	if (checkBox.checked == true) {
-		if (cryptoValue == "Sélectionner une crypto" || quantite.value === "") {
+		if (
+			cryptoValue == "Sélectionner une crypto" ||
+			quantite.value === "" ||
+			parseFloat(quantite.value) <= 0
+		) {
 			document.getElementById("alerteNoCrypto").style.display = "block";
 			document.getElementById("checkboxNowPrice").checked = false;
 		} else {
-			fetch(window.url)
+			fetch(url_api)
 				.then((resp) => resp.json())
 				.then(function (data) {
 					data.data.map((crypto) => {
@@ -58,25 +79,29 @@ function onChangeCrypto() {
 }
 
 var formVendre = document.getElementById("vendre");
+if (formVendre) {
+	formVendre.addEventListener("submit", (e) => {
+		e.preventDefault();
 
-formVendre.addEventListener("submit", (e) => {
-	e.preventDefault();
+		var quantite = document.getElementById("quantite");
+		var crypto = document.getElementById("crypto");
 
-	var quantite = document.getElementById("quantite");
-	var crypto = document.getElementById("crypto");
-
-	fetch(window.url + "?cryptowanted=" + crypto.value)
-		.then((resp) => resp.json())
-		.then(function (data) {
-			if (quantite.value <= data[0][0]) {
-				console.log("ok");
-				formVendre.submit();
-			} else {
-				document.getElementById("alerteNoCrypto").style.display =
-					"block";
-			}
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
-});
+		fetch(url_api + "?cryptowanted=" + crypto.value)
+			.then((resp) => resp.json())
+			.then(function (data) {
+				if (
+					quantite.value <= data[0][0] &&
+					parseFloat(quantite.value) <= 0
+				) {
+					console.log("ok");
+					formVendre.submit();
+				} else {
+					document.getElementById("alerteNoCrypto").style.display =
+						"block";
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	});
+}

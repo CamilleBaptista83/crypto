@@ -12,12 +12,12 @@ import os
 def create_app():
     app = Flask(__name__)
 
-    baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
     headers = { 'X-CMC_PRO_API_KEY' : os.environ.get('X-CMC_PRO_API_KEY')}
 
     @app.route("/")
     def home():
         #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT crypto, SUM(quantite) FROM mes_cryptos GROUP BY crypto")
         mes_cryptos = curseur.fetchall()
@@ -37,6 +37,7 @@ def create_app():
     
     @app.route("/graphique")
     def graphique():
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         df_mes_cryptos = pd.io.sql.read_sql('SELECT * FROM every_day', baseDeDonnees)
         baseDeDonnees.close()
@@ -69,6 +70,7 @@ def create_app():
     @app.route("/post-add", methods=['POST'] )
     def postAdd():
         #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         new_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'])
         curseur.execute("INSERT INTO mes_cryptos (crypto, quantite, prix) VALUES (%s, %s, %s)", new_crypto)
@@ -78,6 +80,7 @@ def create_app():
 
     @app.route("/modify")
     def modify():
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT * FROM mes_cryptos")
         mes_cryptos = curseur.fetchall()
@@ -94,6 +97,7 @@ def create_app():
     @app.route("/vendre", methods=['POST'] )
     def vendre():
         #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         vendre_crypto = (request.form['crypto'],  request.form['quantite'], request.form['prix'])
         curseur.execute("INSERT INTO mes_cryptos (crypto, quantite, prix) VALUES (%s, -1 *(%s), %s)", vendre_crypto)
@@ -113,6 +117,7 @@ def create_app():
     def getDataBaseForJs():
         #API
         cryptoWanted = request.args.get('cryptowanted')
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         curseur.execute(" SELECT SUM(quantite) FROM mes_cryptos WHERE crypto = (%s)", (cryptoWanted, )) 
         cryptoSelected = curseur.fetchall()       
@@ -124,6 +129,7 @@ def create_app():
     @app.route("/daily")
     def daily():
         #BDD APPEL
+        baseDeDonnees = mysql.connector.connect(host=os.environ.get('DB_HOST'),user=os.environ.get('DB_USER'),password=os.environ.get('DB_PASSWD'), database=os.environ.get('DB_NAME'))
         curseur = baseDeDonnees.cursor()
         curseur.execute("SELECT crypto, SUM(quantite) FROM mes_cryptos GROUP BY crypto")
         mes_cryptos = curseur.fetchall()

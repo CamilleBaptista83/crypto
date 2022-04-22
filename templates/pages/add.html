@@ -23,7 +23,7 @@
                             class="fa-solid fa-magnifying-glass"></i></span>
                     <select class="form-select" aria-label="Default select example" name="crypto" size="" id="crypto"
                         onchange="onChangeCrypto()">
-                        <option selected>Sélectionner une crypto</option>
+                        <option value="" selected>Sélectionner une crypto</option>
 
                         {% for crypto in api_crypto %}
                         <option value="{{crypto['symbol']}}">{{crypto['symbol']}}</option>

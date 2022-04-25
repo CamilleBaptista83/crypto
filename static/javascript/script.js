@@ -20,7 +20,8 @@ function isChecked() {
 		if (
 			jQuery("#crypto").val() == "" ||
 			jQuery("#quantite").val() == "" ||
-			parseFloat(jQuery("#quantite").val()) <= 0
+			parseFloat(jQuery("#quantite").val()) <= 0 ||
+			parseFloat(jQuery("#prix-add").val()) <= 0
 		) {
 			jQuery("#alerteNoCrypto").show();
 			jQuery("#checkboxNowPrice").prop("checked", false);
@@ -55,7 +56,8 @@ if (jQuery("#vendre").length) {
 		if (
 			jQuery("#crypto").val() == "" ||
 			jQuery("#quantite").val() == "" ||
-			parseFloat(jQuery("#quantite").val()) < 0
+			parseFloat(jQuery("#quantite").val()) < 0 ||
+			parseFloat(jQuery("#prix-add").val()) <= 0
 		) {
 			jQuery("#alerteNoCrypto").show();
 			jQuery("#checkboxNowPrice").prop("checked", false);

@@ -27,7 +27,7 @@
                 {% for crypto in mes_cryptos %}
                 <tr>
                     <th>{{crypto[0]}}</th>
-                    <th>{{crypto[1]}}</th>
+                    <th>{{crypto[1]|round(2)}}</th>
                     {% for api_crypto in api_cryptos %}               
                     {% if crypto[0] == api_crypto['symbol'] %}
                     <th>{{(api_crypto['quote']['USD']['percent_change_24h'])|round(2)}} %</th>     

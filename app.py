@@ -44,7 +44,7 @@ def create_app():
 
         img = io.BytesIO()
         
-        plt.figure(figsize=(16,8), facecolor = 'black')
+        plt.figure(figsize=(16,25), facecolor = 'black')
         plt.plot(df_mes_cryptos.jour, df_mes_cryptos.montant, c='white', lw=6)
         plt.axis('off')
         plt.xlabel('Dates')
